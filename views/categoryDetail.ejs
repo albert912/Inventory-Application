@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | Inventory App</title>
+</head>
+<body>
+    <p><a href="/">Back to Home</a></p>
+
+    <h1><%= category.name %> Category</h1>
+
+    <% if (category.description) { %>
+        <p><strong>Description:</strong> <%= category.description %></p>
+    <% } %>
+
+    <p>
+        <a href="/categories/<%= category.id %>/edit">Edit Category</a>
+    </p>
+
+    <h3>Delete Category</h3>
+    <% if (errors && errors.length > 0) { %>
+        <div style="color: red;">
+            <ul>
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+        </div>
+    <% } %>
+    <form action="/categories/<%= category.id %>/delete" method="POST">
+        <label for="adminPassword">Admin Password:</label>
+        <input type="password" id="adminPassword" name="adminPassword" required>
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this category? This action cannot be undone.');">Delete Category</button>
+    </form>
+
+    ---
+
+    <h2>Items in this Category</h2>
+    <% if (items && items.length > 0) { %>
+        <ul>
+            <% items.forEach(function(item) { %>
+                <li>
+                    <strong><a href="/items/<%= item.id %>"><%= item.name %></a></strong>
+                    (Price: $<%= item.price.toFixed(2) %>, In Stock: <%= item.number_in_stock %>)
+                    <% if (item.description) { %>
+                        <p><%= item.description %></p>
+                    <% } %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No items found in this category.</p>
+    <% } %>
+
+    <p><a href="/items/new">Add New Item to this Category</a></p>
+</body>
+</html>

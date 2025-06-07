@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <p>Welcome to your Inventory Management Application!</p>
+
+    <h2>Categories</h2>
+    <% if (categories && categories.length > 0) { %>
+        <ul>
+            <% categories.forEach(function(category) { %>
+                <li>
+                    <a href="/categories/<%= category.id %>"><%= category.name %></a>
+                    <% if (category.description) { %>
+                        - <%= category.description %>
+                    <% } %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No categories found.</p>
+    <% } %>
+
+    <p><a href="/categories/new">Add New Category</a></p>
+    <p><a href="/items/new">Add New Item</a></p>
+</body>
+</html>
